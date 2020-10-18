@@ -1,0 +1,25 @@
+ffmpeg -re -i video.mp4 -c copy rtmp://localhost:1935/live/test.flv
+
+
+ffmpeg -i video.mp4 -map_channel 0.1.0 test.mp3
+
+
+ffprobe -i video.mp4 -show_streams
+
+
+ffmpeg -i video.mp4 -map_channel 0.1.0 left.mp4 -map_channel 0.1.1 right.mp4
+
+ffmpeg -re -i video.mp4 -map_channel 0.1.0 rtmp://localhost:1935/live/testleft.flv
+
+
+ffplay rtmp://192.168.0.107:1935/live/testleft.flv
+
+
+ffmpeg -re -i atmos.mp4 -map_channel 0.1.0 rtmp://192.168.0.107:1935/live/testleft.flv -map_channel 0.1.1 rtmp://192.168.0.107:1935/live/testright.flv
+
+
+ffmpeg -re -i atmos.mp4 -map_channel 0.1.0 -map_channel 0.1.1 -map_channel 0.1.2 rtmp://192.168.0.107:1935/live/testcenter.flv
+
+
+
+ffmpeg -re -i atmos.mp4 -map_channel 0.1.0 -map_channel 0.1.1 -map_channel 0.1.2 rtmp://192.168.0.111:1935/live/testright.flv -map_channel 0.1.1 -map_channel 0.1.4 rtmp://192.168.0.111:1935/live/rearleft.flv -map_channel 0.1.5 rtmp://192.168.0.111:1935/live/rearright.flv
